@@ -651,7 +651,7 @@ type RentalsResponse struct {
 			return
 		}
 		// Step 1: Fetch available vehicles
-		url := fmt.Sprintf("http://localhost:8080/vehicles/available?user_id=%d", currentUserID)
+		url := fmt.Sprintf("http://localhost:8081/vehicles/available?user_id=%d", currentUserID)
 		resp, err := http.Get(url)
 		if err != nil {
 			fmt.Println("Error fetching available vehicles:", err)
@@ -707,7 +707,7 @@ type RentalsResponse struct {
 			return
 		}
 		// Step 4: Fetch estimated cost using POST request with user_id in the query and other data in the body
-	estimateURL := fmt.Sprintf("http://localhost:8080/billing/estimate-cost?user_id=%d", currentUserID)
+	estimateURL := fmt.Sprintf("http://localhost:8082/billing/estimate-cost?user_id=%d", currentUserID)
 
 	estimateData := map[string]interface{}{
 		"vehicle_id": vehicleID,
@@ -771,7 +771,7 @@ type RentalsResponse struct {
 		}
 
 	// Step 6: Create the rental
-	createURL := fmt.Sprintf("http://localhost:8080/vehicles/create-rental?user_id=%d", currentUserID)
+	createURL := fmt.Sprintf("http://localhost:8081/vehicles/create-rental?user_id=%d", currentUserID)
 	rentalData := map[string]interface{}{
 		"vehicle_id": vehicleID,
 		"hours":      hours,
@@ -831,7 +831,7 @@ type RentalsResponse struct {
 		}
 	
 		// Step 2: Construct the URL for canceling the rental
-		url := fmt.Sprintf("http://localhost:8080/vehicles/cancel-rental?user_id=%d", currentUserID)
+		url := fmt.Sprintf("http://localhost:8081/vehicles/cancel-rental?user_id=%d", currentUserID)
 	
 		// Step 3: Make the POST request using curl
 		cmd := exec.Command("curl", "-s", "-X", "POST", url)
@@ -910,7 +910,7 @@ type RentalsResponse struct {
 		}
 	
 		// Step 5: Extend the rental (POST request)
-		extendRentalURL := fmt.Sprintf("http://localhost:8080/vehicles/extend-rental?user_id=%d", currentUserID)
+		extendRentalURL := fmt.Sprintf("http://localhost:8081/vehicles/extend-rental?user_id=%d", currentUserID)
 		extendRequestBody := fmt.Sprintf("{\"hours\": %d}", hours)
 		req, err := http.NewRequest("POST", extendRentalURL, bytes.NewBuffer([]byte(extendRequestBody)))
 		if err != nil {
@@ -990,7 +990,7 @@ type RentalsResponse struct {
 		}
 	
 		// Step 4: Complete the rental (POST request)
-		completeRentalURL := fmt.Sprintf("http://localhost:8080/vehicles/complete-rental?user_id=%d", currentUserID)
+		completeRentalURL := fmt.Sprintf("http://localhost:8081/vehicles/complete-rental?user_id=%d", currentUserID)
 		req, err := http.NewRequest("POST", completeRentalURL, nil)
 		if err != nil {
 			fmt.Println("Error creating complete rental request:", err)
@@ -1043,7 +1043,7 @@ type RentalsResponse struct {
 	
 	func viewAllInvoices(unpaidOnly bool) {
 		// Create the URL with the necessary query parameters
-		url := fmt.Sprintf("http://localhost:8080/billing/get-invoices?userid=%d", currentUserID)
+		url := fmt.Sprintf("http://localhost:8082/billing/get-invoices?userid=%d", currentUserID)
 		if unpaidOnly {
 			url += "&unpaidonly=true" // Append the unpaidonly=true query parameter
 		}
@@ -1102,7 +1102,7 @@ type RentalsResponse struct {
 		}
 	
 		// Prepare the API URL and payload
-		url := fmt.Sprintf("http://localhost:8080/billing/pay-invoice?userid=%d", currentUserID)
+		url := fmt.Sprintf("http://localhost:8082/billing/pay-invoice?userid=%d", currentUserID)
 		payload := map[string]interface{}{
 			"invoice_id": invoiceID,
 		}
